@@ -2,6 +2,7 @@ export default (RSSraw) => {
   const parser = new DOMParser();
   try {
     const rss = parser.parseFromString(RSSraw, 'text/xml');
+
     const feed = {
       title: rss.querySelector('title').textContent,
       description: rss.querySelector('description').textContent,

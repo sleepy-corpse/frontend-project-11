@@ -13,7 +13,7 @@ export default {
       containerNames: {
         posts: 'Посты',
         feeds: 'Фиды',
-      }
+      },
     },
   },
 };
