@@ -3,4 +3,6 @@ install:
 lint:
 	npx eslint .
 build:
-	npx webpack 
+	npx webpack
+serve:
+	npx webpack serve
