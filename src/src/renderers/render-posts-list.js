@@ -23,6 +23,7 @@ export default (watchedState, parentDiv, i18nInstance) => {
     const btn = document.createElement('button');
     btn.addEventListener('click', () => {
       watchedState.modal.selectedPost = post.id;
+      markPostAsRead(watchedState, post.id);
     });
     btn.classList.add('btn', 'btn-outline-primary', 'btn-sm');
     btn.dataset.bsToggle = 'modal';

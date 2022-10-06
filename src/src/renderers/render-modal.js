@@ -1,5 +1,3 @@
-import markPostAsRead from '../mark-post-as-read';
-
 export default (watchedState, i18nInstance, modal) => {
   const currentPost = watchedState.posts.find((pst) => pst.id === watchedState.modal.selectedPost);
   modal.title.textContent = currentPost.title;
@@ -12,9 +10,6 @@ export default (watchedState, i18nInstance, modal) => {
   goBtn.setAttribute('role', 'button');
   goBtn.setAttribute('target', '_blank');
   goBtn.setAttribute('rel', 'noopener noreferer');
-  goBtn.addEventListener('click', () => {
-    markPostAsRead(watchedState, currentPost.id);
-  });
   const closeBtn = document.createElement('button');
   closeBtn.setAttribute('type', 'button');
   closeBtn.setAttribute('data-bs-dismiss', 'modal');
