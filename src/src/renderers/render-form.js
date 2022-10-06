@@ -1,12 +1,16 @@
-export default (state, i18nInstance, formElements) => {
+export default (watchedState, i18nInstance, formElements) => {
+  formElements.mainButton.textContent = i18nInstance.t('buttons.addRSS');
+  formElements.header.textContent = i18nInstance.t('header');
+  formElements.inputLabel.textContent = i18nInstance.t('inputLabel');
+  formElements.example.textContent = i18nInstance.t('example');
   formElements.feedback.textContent = '';
-  switch (state.downloadingRSS.state) {
+  switch (watchedState.downloadingRSS.state) {
     case 'failed':
       formElements.input.removeAttribute('disabled');
       formElements.input.classList.add('is-invalid');
       formElements.mainButton.removeAttribute('disabled');
       formElements.feedback.classList.replace('text-success', 'text-danger');
-      formElements.feedback.textContent = i18nInstance.t(`errors.${state.error}`);
+      formElements.feedback.textContent = i18nInstance.t(`errors.${watchedState.error}`);
       break;
     case 'active':
       formElements.input.classList.remove('is-invalid');

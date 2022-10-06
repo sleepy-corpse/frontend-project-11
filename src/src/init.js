@@ -41,7 +41,7 @@ export default () => {
     const form = document.querySelector('form');
     const state = {
       downloadingRSS: {
-        state: 'not-active',
+        state: '',
       },
       error: '',
       feeds: [],
@@ -66,6 +66,8 @@ export default () => {
       const url = formData.get('url');
       downloadRSS(watchedState, url);
     });
+
+    watchedState.downloadingRSS.state = 'not-active';
   };
 
   const runApp = () => {

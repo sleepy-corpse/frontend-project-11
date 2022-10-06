@@ -13,6 +13,5 @@ export default (containerName, parentDiv, i18nInstance) => {
   cardBody.append(cardTitle);
   parentDiv.textContent = '';
   parentDiv.append(card);
-
   return ul;
 };

@@ -1,8 +1,8 @@
 import createUl from './create-ul';
 
-export default (state, parentDiv, i18nInstance) => {
+export default (watchedState, parentDiv, i18nInstance) => {
   const feedsUl = createUl('feeds', parentDiv, i18nInstance);
-  state.feeds.forEach((feed) => {
+  watchedState.feeds.forEach((feed) => {
     const li = document.createElement('li');
     li.className = 'list-group-item border-0 border-end-0';
     const header = document.createElement('h3');

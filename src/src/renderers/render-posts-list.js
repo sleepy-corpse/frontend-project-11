@@ -28,7 +28,7 @@ export default (watchedState, parentDiv, i18nInstance) => {
     btn.dataset.bsToggle = 'modal';
     btn.dataset.bsTarget = '#infoModal';
     btn.dataset.id = post.id;
-    btn.textContent = 'Просмотр';
+    btn.textContent = i18nInstance.t('buttons.post.view');
     li.append(a, btn);
     postsUl.append(li);
   });
