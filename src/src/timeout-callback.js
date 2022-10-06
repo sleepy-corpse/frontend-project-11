@@ -3,8 +3,9 @@ import parseRSS from './parse-rss';
 
 const timeoutCallback = (outerState) => {
   if (outerState.feeds.length < 1) {
-    setTimeout(timeoutCallback, 5000);
-    return;
+    return setTimeout(() => {
+      timeoutCallback(outerState);
+    }, 5000);
   }
   const urls = [];
   const promises = outerState.feeds.map((feed) => {
@@ -28,7 +29,7 @@ const timeoutCallback = (outerState) => {
       }
     });
   });
-  setTimeout(() => {
+  return setTimeout(() => {
     timeoutCallback(outerState);
   }, 5000);
 };

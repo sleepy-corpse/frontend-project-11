@@ -12,6 +12,7 @@ export default (RSSraw) => {
       title: item.querySelector('title').textContent,
       description: item.querySelector('description').textContent,
       link: item.querySelector('link').textContent,
+      visited: false,
     }));
     return { feed, posts };
   } catch (error) {
