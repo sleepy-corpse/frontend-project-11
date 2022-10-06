@@ -25,7 +25,7 @@ export default {
         addRSS: 'Добавить',
         post: {
           view: 'Просмотр',
-        }
+        },
       },
     },
   },
