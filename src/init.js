@@ -21,7 +21,7 @@ const elements = {
     title: document.querySelector('.modal-title'),
     description: document.querySelector('.modal-body'),
     footer: document.querySelector('.modal-footer'),
-  }
+  },
 };
 
 const getNewPosts = (outerState) => {
@@ -35,7 +35,7 @@ const getNewPosts = (outerState) => {
     urls.push(feed.url);
     return axios.get(`https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(feed.url)}`);
   });
-  Promise.all(promises).then((responses) => {
+  return Promise.all(promises).then((responses) => {
     responses.forEach((response, index) => {
       const rss = parseRSS(response.data.contents);
       const feedId = outerState.feeds.find((feed) => feed.url === urls[index]).id;
@@ -51,11 +51,9 @@ const getNewPosts = (outerState) => {
         outerState.posts.unshift(...formattedPosts);
       }
     });
-  }).finally(() => 
-    setTimeout(() => {
-      getNewPosts(outerState);
-    }, 5000)
-  );
+  }).finally(() => setTimeout(() => {
+    getNewPosts(outerState);
+  }, 5000));
 };
 
 const downloadRSS = (state, url) => {
@@ -103,7 +101,7 @@ export default () => {
       },
       uiState: {
         visitedPosts: [],
-      }
+      },
     };
     yup.setLocale({
       string: {

@@ -5,7 +5,6 @@ const markPostAsRead = (watchedState, selectedPostId) => {
   watchedState.uiState.visitedPosts.push(targetPost.id);
 };
 
-
 export default (watchedState, parentDiv, i18nInstance) => {
   const postsUl = createUl('posts', parentDiv, i18nInstance);
   watchedState.posts.forEach((post) => {
