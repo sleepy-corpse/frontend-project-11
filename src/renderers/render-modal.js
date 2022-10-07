@@ -1,4 +1,4 @@
-export default (watchedState, i18nInstance, modal) => {
+export default (watchedState, modal, i18nInstance) => {
   const currentPost = watchedState.posts.find((pst) => pst.id === watchedState.modal.selectedPost);
   modal.title.textContent = currentPost.title;
   modal.description.textContent = currentPost.description;

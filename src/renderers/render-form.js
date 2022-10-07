@@ -1,4 +1,4 @@
-export default (watchedState, i18nInstance, formElements) => {
+export default (watchedState, formElements, i18nInstance) => {
   formElements.mainButton.textContent = i18nInstance.t('buttons.addRSS');
   formElements.header.textContent = i18nInstance.t('header');
   formElements.inputLabel.textContent = i18nInstance.t('inputLabel');

@@ -4,7 +4,59 @@ import axios from 'axios';
 import createStateWatcher from './view';
 import resources from './locales/ru';
 import parseRSS from './parse-rss';
-import timeoutCallback from './timeout-callback';
+
+const elements = {
+  formElements: {
+    form: document.querySelector('form'),
+    header: document.querySelector('h1'),
+    example: document.querySelector('.example'),
+    feedback: document.querySelector('.feedback'),
+    input: document.querySelector('#url-input'),
+    inputLabel: document.querySelector('label[for="url-input"'),
+    mainButton: document.querySelector('button[type="submit"]'),
+  },
+  postsDiv: document.querySelector('.posts'),
+  feedsDiv: document.querySelector('.feeds'),
+  modalElements: {
+    title: document.querySelector('.modal-title'),
+    description: document.querySelector('.modal-body'),
+    footer: document.querySelector('.modal-footer'),
+  }
+};
+
+const getNewPosts = (outerState) => {
+  if (outerState.feeds.length < 1) {
+    return setTimeout(() => {
+      getNewPosts(outerState);
+    }, 5000);
+  }
+  const urls = [];
+  const promises = outerState.feeds.map((feed) => {
+    urls.push(feed.url);
+    return axios.get(`https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(feed.url)}`);
+  });
+  Promise.all(promises).then((responses) => {
+    responses.forEach((response, index) => {
+      const rss = parseRSS(response.data.contents);
+      const feedId = outerState.feeds.find((feed) => feed.url === urls[index]).id;
+      const newPosts = rss.posts
+        .filter((post) => outerState.posts
+          .filter((oldPost) => post.link === oldPost.link).length === 0);
+      if (newPosts.length > 0) {
+        const formattedPosts = newPosts.map((newPost, newPostIndex) => ({
+          ...newPost,
+          id: outerState.posts.length + newPosts.length - newPostIndex,
+          feedId,
+        }));
+        outerState.posts.unshift(...formattedPosts);
+      }
+    });
+  }).finally(() => 
+    setTimeout(() => {
+      getNewPosts(outerState);
+    }, 5000)
+  );
+};
 
 const downloadRSS = (state, url) => {
   const urlSchema = yup.string().url().test(
@@ -49,15 +101,18 @@ export default () => {
       modal: {
         selectedPost: '',
       },
+      uiState: {
+        visitedPosts: [],
+      }
     };
     yup.setLocale({
       string: {
         url: 'invalid',
       },
     });
-    const watchedState = createStateWatcher(state, i18nInstance);
+    const watchedState = createStateWatcher(state, elements, i18nInstance);
     setTimeout(() => {
-      timeoutCallback(watchedState);
+      getNewPosts(watchedState);
     }, 5000);
 
     form.addEventListener('submit', (event) => {

@@ -1,5 +1,10 @@
 import createUl from './create-ul';
-import markPostAsRead from '../mark-post-as-read';
+
+const markPostAsRead = (watchedState, selectedPostId) => {
+  const targetPost = watchedState.posts.find((currentPost) => currentPost.id === selectedPostId);
+  watchedState.uiState.visitedPosts.push(targetPost.id);
+};
+
 
 export default (watchedState, parentDiv, i18nInstance) => {
   const postsUl = createUl('posts', parentDiv, i18nInstance);
@@ -10,7 +15,7 @@ export default (watchedState, parentDiv, i18nInstance) => {
     a.addEventListener('click', () => {
       markPostAsRead(watchedState, post.id);
     });
-    if (post.visited) {
+    if (watchedState.uiState.visitedPosts.includes(post.id)) {
       a.className = 'fw-normal link-secondary';
     } else {
       a.className = 'fw-bold';
